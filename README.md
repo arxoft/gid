@@ -1,6 +1,6 @@
 # gitops
 
-Save efforts at Git CLI (Bash) by utilizing quick operations.
+Addicted to Git CLI? Save efforts by utilizing these quick operations.
 
 **Operations currently available**
 
