@@ -11,4 +11,6 @@ Save efforts at Git CLI (Bash) by utilizing quick operations.
 
 **Usage**
 
-Just `cd` into the Git repository, and run `./gitops`, and follow instructions.
+- Downlaod and save `gitops` shell script at root of your Git repository.
+- Make sure `gitops` is executable: `chmod +x gitops`
+- Just `cd` into the repository, and run `./gitops`, and follow instructions.
