@@ -1,0 +1,49 @@
+#!/bin/bash
+set -e
+clear
+bold=$(tput bold)
+normal=$(tput sgr0)
+D=`date +%Y%m%d%H%M%S`
+
+BRANCH=`git branch | grep '*' | sed 's/* //g' ` 
+# echo $BRANCH | tr '\n' ' ' | xclip -sel clip 
+
+OP1="Copy branch name"
+OP2="Push to origin"
+OP3="Pull from origin"
+OP4="Create a new branch"
+
+echo "Current Branch: $bold$BRANCH${normal}"
+echo "What would you like to do?"
+echo ""
+echo "1. $OP1"
+echo "2. $OP2"
+echo "3. $OP3"
+echo "4. $OP4"
+echo ""
+read -p "Enter your option: " -n1 N  
+
+case "$N" in 
+
+1)  echo ". $OP1"
+    echo $BRANCH | tr '\n' ' ' | xclip -sel clip
+    echo "Copied."
+    ;;
+
+2)  echo ". $OP2"
+    git push origin $BRANCH
+    ;;
+
+3)  echo ". $OP3"
+    git pull origin $BRANCH
+    ;;
+
+4)  echo ". $OP4"
+    read -p "Enter your branch name (in lower-case-dashed-string): " N
+    git branch $D-$N
+    echo "Created branch $bold$D-$N$normal"
+    echo -n "$D-$N" | xclip -sel clip
+    echo "Copied $bold$D-$N$normal to clipboard."
+    ;;
+
+esac 
