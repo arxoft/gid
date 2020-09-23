@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
+
+while :
+do
 clear
+
 bold=$(tput bold)
 normal=$(tput sgr0)
 D=`date +%Y%m%d%H%M%S`
@@ -8,23 +12,32 @@ D=`date +%Y%m%d%H%M%S`
 BRANCH=`git branch | grep '*' | sed 's/* //g' ` 
 # echo $BRANCH | tr '\n' ' ' | xclip -sel clip 
 
+OP0="Exit"
 OP1="Copy branch name"
 OP2="Push to origin"
 OP3="Pull from origin"
 OP4="Create a new branch"
+OP5="Git Settings"
+
+OPS1="Set my name and email"
+OPS2="Disallow file mod (permissions) tracking"
+OPS3="Remember my Git credentials"
 
 echo "Current Branch: $bold$BRANCH${normal}"
-echo "What would you like to do?"
+echo "${bold}What would you like to do?${normal}"
 echo ""
 echo "1. $OP1"
 echo "2. $OP2"
 echo "3. $OP3"
 echo "4. $OP4"
+echo "5. $OP5"
+echo "0. $OP0"
 echo ""
 read -p "Enter your option: " -n1 N  
 
 case "$N" in 
 
+0)  echo && exit ;; 
 1)  echo ". $OP1"
     echo $BRANCH | tr '\n' ' ' | xclip -sel clip
     echo "Copied."
@@ -46,4 +59,44 @@ case "$N" in
     echo "Copied $bold$D-$N$normal to clipboard."
     ;;
 
+5) echo ". $OP5" 
+   sleep 1
+   echo "${bold}OK. What settings would you like to change?${normal}"
+   echo ""
+   echo "1. $OPS1"
+   echo "2. $OPS2"
+   echo "3. $OPS3"
+   echo ""
+   read -p "Enter your option: " -n1 NS 
+
+   case "$NS" in 
+
+   1)   echo ". $OPS1" 
+        sleep 1
+        echo "OK. The current value for name: ${bold}`git config user.name`${normal}"
+        echo "Current email is: ${bold}`git config user.email`${normal}"
+        echo 
+        read -p "Enter new name: " N
+        read -p "Enter new email: " E
+        git config user.name $N
+        git config user.email $E
+        echo 
+        echo "Done." 
+        ;;
+   2)   echo ". $OPS2" 
+        git config core.fileMode false
+        echo "${bold}Done. File permission changes won't be tracked any more.${normal}"
+        ;;
+   3)   echo ". $OPS3" 
+        git config credential.helper store
+        echo "${bold}Done. Git won't bother you with username and password except one last time.${normal}"
+        ;;
+
+   esac 
 esac 
+
+sleep 1
+echo
+read -p "Hit anything on enter to continue..."
+
+done
