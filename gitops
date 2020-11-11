@@ -10,6 +10,7 @@ normal=$(tput sgr0)
 D=`date +%Y%m%d%H%M%S`
 
 BRANCH=`git branch | grep '*' | sed 's/* //g' ` 
+ORIGIN=`git remote get-url origin` 
 # echo $BRANCH | tr '\n' ' ' | xclip -sel clip 
 
 OP0="Quit"
@@ -25,6 +26,8 @@ OPS3="Remember my Git credentials"
 
 echo "Repo Directory: `pwd`"
 echo "Current Branch: $bold$BRANCH${normal}"
+echo "Origin URL: $bold$ORIGIN${normal}"
+echo
 echo "${bold}What would you like to do?${normal}"
 echo ""
 echo "c. $OP1"
