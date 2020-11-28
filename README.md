@@ -1,13 +1,19 @@
 # gitops
 
-Addicted to Git CLI? Save efforts by utilizing these quick operations.
+Addicted to Git CLI? I save efforts by utilizing these quick operations.
 
 **Operations currently available**
 
-1. Copy branch name
-2. Push to origin
-3. Pull from origin
-4. Create a new branch
+```
+c. Copy branch name
+p. Push to origin
+o. Pull from origin
+b. Create a new branch
+s. Git Settings
+    1. Set my name and email
+    2. Disallow file mod (permissions) tracking
+    3. Remember my Git credentials
+```
 
 **Usage**
 
