@@ -1,8 +1,14 @@
-# gitops
+# Git District
 
 Addicted to Git CLI? I save efforts by utilizing these quick operations.
 
-**Operations currently available**
+**Installation**
+
+`npm install arxoft/gitdistrict`
+
+**Usage**
+
+Just hit `gid`. Operations currently available:
 
 ```
 c. Copy branch name
@@ -14,9 +20,4 @@ s. Git Settings
     2. Disallow file mod (permissions) tracking
     3. Remember my Git credentials
 ```
-
-**Usage**
-
-- Downlaod and save `gitops` shell script at root of your Git repository.
-- Make sure `gitops` is executable: `chmod +x gitops`
-- Just `cd` into the repository, and run `./gitops`, and follow instructions.
+ 
