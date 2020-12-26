@@ -1,0 +1,29 @@
+{
+  "name": "gitdistrict",
+  "version": "1.0.0",
+  "description": "Git District - Make Git CLI easy and fun",
+  "main": "index.js",
+  "scripts": {
+    "test": "gid test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arxoft/gitdistrict.git"
+  },
+  "bin": {
+    "gid": "./gid"
+  },
+  "keywords": [
+    "git",
+    "gid",
+    "git",
+    "district",
+    "cli"
+  ],
+  "author": "Arxoft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arxoft/gitdistrict/issues"
+  },
+  "homepage": "https://github.com/arxoft/gitdistrict#readme"
+}
