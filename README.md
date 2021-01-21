@@ -4,7 +4,7 @@ Addicted to Git CLI? I save efforts by utilizing these quick operations.
 
 **Installation**
 
-`npm install arxoft/gitdistrict`
+`yarn add arxoft/gitdistrict`
 
 **Usage**
 
