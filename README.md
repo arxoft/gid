@@ -8,7 +8,11 @@ Addicted to Git CLI? I save efforts by utilizing these quick operations.
 
 **Usage**
 
-Just hit `npx gid`. Operations currently available:
+Just hit `npx gid`. 
+
+Or `ln -s node_modules/gitdistrict/gid git` and run `./gid`.
+
+Operations currently available:
 
 ```
 c. Copy branch name
