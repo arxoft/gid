@@ -10,7 +10,7 @@ Addicted to Git CLI? I save efforts by utilizing these quick operations.
 
 Just hit `npx gid`. 
 
-Or `ln -s node_modules/gitdistrict/gid git` and run `./gid`.
+Or `ln -s node_modules/gitdistrict/gid gid` and run `./gid`.
 
 Operations currently available:
 
