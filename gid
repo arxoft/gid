@@ -3,7 +3,6 @@ set -e
 
 while :
 do
-clear
 
 bold=$(tput bold)
 normal=$(tput sgr0)
@@ -56,11 +55,18 @@ o)  echo ". $OP3"
     ;;
 
 b)  echo ". $OP4"
-    read -p "Enter your branch name (in lower-case-dashed-string): " N
-    git branch $D-$N
-    echo "Created branch $bold$D-$N$normal"
-    echo -n "$D-$N" | xclip -sel clip
-    echo "Copied $bold$D-$N$normal to clipboard."
+    read -p "Enter your branch name (in lower-case-dashed-string): " NB1
+    git branch $D-$NB1
+    echo "Created branch $bold$D-$NB1$normal"
+    echo -n "$D-$NB1" | xclip -sel clip
+    echo "Copied $bold$D-$NB1$normal to clipboard."
+    read -p "Switch now? (y/n) " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo
+        echo "OK, trying to switch..."
+        git checkout $D-$NB1
+    fi
     ;;
 
 s) echo ". $OP5" 
