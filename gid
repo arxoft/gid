@@ -52,28 +52,29 @@ do
 
     q)  echo && exit ;; 
     c)  echo
-        echo "$BOLD$OP1$normal"
+        echo "$BOLD$OP1$NORMAL"
         echo $BRANCH | tr '\n' ' ' | xclip -sel clip
-        echo "Copied."
+        echo "Copied $BOLD$BRANCH$NORMAL to clipboard."
+        sleep 2
         ;;
 
     p)  echo
-        echo "$BOLD$OP2$normal"
+        echo "$BOLD$OP2$NORMAL"
         git push origin $BRANCH
         ;;
 
     o)  echo
-        echo "$BOLD$OP3$normal"
+        echo "$BOLD$OP3$NORMAL"
         git pull origin $BRANCH
         ;;
 
     b)  echo
-        echo "$BOLD$OP4$normal"
+        echo "$BOLD$OP4$NORMAL"
         read -p "Enter your branch name (in lower-case-dashed-string): " NB1
         git branch $D-$NB1
-        echo "Created branch $BOLD$D-$NB1$normal"
+        echo "Created branch $BOLD$D-$NB1$NORMAL"
         echo -n "$D-$NB1" | xclip -sel clip
-        echo "Copied $BOLD$D-$NB1$normal to clipboard."
+        echo "Copied $BOLD$D-$NB1$NORMAL to clipboard."
         read -p "Switch now? (y/n) " -n 1 -r
         if [[ $REPLY =~ ^[Yy]$ ]]
         then
@@ -84,7 +85,7 @@ do
         ;;
 
     s)  echo
-        echo "$BOLD$OP5$normal" 
+        echo "$BOLD$OP5$NORMAL" 
         sleep 1
         echo "${bold}OK. What settings would you like to change?${NORMAL}"
         echo ""
@@ -107,14 +108,17 @@ do
                 git config user.email $E
                 echo 
                 echo "Done." 
+                sleep 2
                 ;;
         2)   echo ". $OP5_2" 
                 git config core.fileMode false
                 echo "${bold}Done. File permission changes won't be tracked any more.${NORMAL}"
+                slee 2
                 ;;
         3)   echo ". $OP5_3" 
                 git config credential.helper store
                 echo "${bold}Done. Git won't bother you with username and password except one last time.${NORMAL}"
+                sleep 2
                 ;;
             
         esac 
