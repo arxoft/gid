@@ -5,17 +5,7 @@ BOLD=$(tput bold)
 NORMAL=$(tput sgr0)
 ARGEX=0
 
-while :
-do
-    BRANCH=`git branch | grep '*' | sed 's/* //g' ` 
-    ORIGIN=`git remote get-url origin`
-
-    # Avoid infinite loop in case args were provided
-    N=
-    if [ "$ARGEX" -eq "0" ]; then
-        N=$1
-    fi
-
+function display_menu () {
     OP0="Quit"
     OP1="Copy branch name"
     OP2="Push to origin"
@@ -45,83 +35,111 @@ do
         read -p "Enter your option: " -n1 N
         echo
     fi
+}
+
+function op_copy_branch () {
+    echo
+    echo "$BOLD$OP1$NORMAL"
+    echo $BRANCH | tr '\n' ' ' | xclip -sel clip
+    echo "Copied $BOLD$BRANCH$NORMAL to clipboard."
+    sleep 2
+}
+
+function op_push_branch () {
+    echo
+    echo "$BOLD$OP2$NORMAL"
+    git push origin $BRANCH
+}
+
+function op_pull_origin () {
+    echo
+    echo "$BOLD$OP3$NORMAL"
+    git pull origin $BRANCH
+    
+}
+
+function op_create_branch () {
+    echo
+    echo "$BOLD$OP4$NORMAL"
+    read -p "Enter your branch name (in lower-case-dashed-string): " NB1
+    git branch $D-$NB1
+    echo "Created branch $BOLD$D-$NB1$NORMAL"
+    echo -n "$D-$NB1" | xclip -sel clip
+    echo "Copied $BOLD$D-$NB1$NORMAL to clipboard."
+    read -p "Switch now? (y/n) " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo
+        echo "OK, trying to switch..."
+        git checkout $D-$NB1
+    fi
+}
+
+function op_settings () {
+    echo
+    echo "$BOLD$OP5$NORMAL" 
+    sleep 1
+    echo "${bold}OK. What settings would you like to change?${NORMAL}"
+    echo ""
+    echo "1. $OP5_1"
+    echo "2. $OP5_2"
+    echo "3. $OP5_3"
+    echo ""
+    read -p "Enter your option: " -n1 NS 
+
+    case "$NS" in 
+
+    1)   echo ". $OP5_1" 
+            sleep 1
+            echo "OK. The current value for name: ${bold}`git config user.name`${NORMAL}"
+            echo "Current email is: ${bold}`git config user.email`${NORMAL}"
+            echo 
+            read -p "Enter new name: " N
+            read -p "Enter new email: " E
+            git config user.name $N
+            git config user.email $E
+            echo 
+            echo "Done." 
+            sleep 2
+            ;;
+    2)   echo ". $OP5_2" 
+            git config core.fileMode false
+            echo "${bold}Done. File permission changes won't be tracked any more.${NORMAL}"
+            slee 2
+            ;;
+    3)   echo ". $OP5_3" 
+            git config credential.helper store
+            echo "${bold}Done. Git won't bother you with username and password except one last time.${NORMAL}"
+            sleep 2
+            ;;
+        
+    esac 
+}
+
+while :
+do
+    BRANCH=`git branch | grep '*' | sed 's/* //g' ` 
+    ORIGIN=`git remote get-url origin`
+
+    # Avoid infinite loop in case args were provided
+    N=
+    if [ "$ARGEX" -eq "0" ]; then
+        N=$1
+    else
+        exit
+    fi
+
+    display_menu
 
     D=`date +%Y%m%d%H%M%S`
 
-    case "$N" in 
-
-    q)  echo && exit ;; 
-    c)  echo
-        echo "$BOLD$OP1$NORMAL"
-        echo $BRANCH | tr '\n' ' ' | xclip -sel clip
-        echo "Copied $BOLD$BRANCH$NORMAL to clipboard."
-        sleep 2
-        ;;
-
-    p)  echo
-        echo "$BOLD$OP2$NORMAL"
-        git push origin $BRANCH
-        ;;
-
-    o)  echo
-        echo "$BOLD$OP3$NORMAL"
-        git pull origin $BRANCH
-        ;;
-
-    b)  echo
-        echo "$BOLD$OP4$NORMAL"
-        read -p "Enter your branch name (in lower-case-dashed-string): " NB1
-        git branch $D-$NB1
-        echo "Created branch $BOLD$D-$NB1$NORMAL"
-        echo -n "$D-$NB1" | xclip -sel clip
-        echo "Copied $BOLD$D-$NB1$NORMAL to clipboard."
-        read -p "Switch now? (y/n) " -n 1 -r
-        if [[ $REPLY =~ ^[Yy]$ ]]
-        then
-            echo
-            echo "OK, trying to switch..."
-            git checkout $D-$NB1
-        fi
-        ;;
-
-    s)  echo
-        echo "$BOLD$OP5$NORMAL" 
-        sleep 1
-        echo "${bold}OK. What settings would you like to change?${NORMAL}"
-        echo ""
-        echo "1. $OP5_1"
-        echo "2. $OP5_2"
-        echo "3. $OP5_3"
-        echo ""
-        read -p "Enter your option: " -n1 NS 
-
-        case "$NS" in 
-
-        1)   echo ". $OP5_1" 
-                sleep 1
-                echo "OK. The current value for name: ${bold}`git config user.name`${NORMAL}"
-                echo "Current email is: ${bold}`git config user.email`${NORMAL}"
-                echo 
-                read -p "Enter new name: " N
-                read -p "Enter new email: " E
-                git config user.name $N
-                git config user.email $E
-                echo 
-                echo "Done." 
-                sleep 2
-                ;;
-        2)   echo ". $OP5_2" 
-                git config core.fileMode false
-                echo "${bold}Done. File permission changes won't be tracked any more.${NORMAL}"
-                slee 2
-                ;;
-        3)   echo ". $OP5_3" 
-                git config credential.helper store
-                echo "${bold}Done. Git won't bother you with username and password except one last time.${NORMAL}"
-                sleep 2
-                ;;
-            
-        esac 
+    case "$N" in  
+        q)  echo && exit ;; 
+        c)  op_copy_branch ;; 
+        p)  op_push_branch ;; 
+        o)  op_pull_origin ;; 
+        b)  op_create_branch ;; 
+        s)  op_settings ;;
     esac 
 
     sleep 1
