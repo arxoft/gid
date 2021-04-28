@@ -11,6 +11,7 @@ function display_menu () {
     OP2="Push to origin"
     OP3="Pull from origin"
     OP4="Create a new branch"
+    OP6="Undo last commit"
     OP5="Git Settings"
     OP5_1="Set my name and email"
     OP5_2="Disallow file mod (permissions) tracking"
@@ -29,6 +30,7 @@ function display_menu () {
         echo "p. $OP2"
         echo "o. $OP3"
         echo "b. $OP4"
+        echo "u. $OP6"
         echo "s. $OP5"
         echo "q. $OP0"
         echo ""
@@ -73,6 +75,13 @@ function op_create_branch () {
         echo "OK, trying to switch..."
         git checkout $D-$NB1
     fi
+}
+
+function op_undo_last_commit () { 
+    echo
+    echo "Undoing last commit. Changes will be kept staged."
+    git reset --soft HEAD~1
+    echo "Done."
 }
 
 function op_settings () {
@@ -139,6 +148,7 @@ do
         p)  op_push_branch ;; 
         o)  op_pull_origin ;; 
         b)  op_create_branch ;; 
+        u)  op_undo_last_commit ;; 
         s)  op_settings ;;
     esac 
 
