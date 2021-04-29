@@ -78,10 +78,13 @@ function op_create_branch () {
 }
 
 function op_undo_last_commit () { 
+    LAST=`git show -s --format=%s`
     echo
-    echo "Undoing last commit. Changes will be kept staged."
+    echo "Last Commit:"
+    echo $BOLD$LAST$NORMAL
     git reset --soft HEAD~1
-    echo "Done."
+    echo
+    echo "Undone."
 }
 
 function op_settings () {
