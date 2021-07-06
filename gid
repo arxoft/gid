@@ -12,6 +12,7 @@ function display_menu () {
     OP3="Pull from origin"
     OP4="Create a new branch"
     OP6="Undo last commit"
+    OP7="Review Pull Request"
     OP5="Git Settings"
     OP5_1="Set my name and email"
     OP5_2="Disallow file mod (permissions) tracking"
@@ -31,6 +32,7 @@ function display_menu () {
         echo "o. $OP3"
         echo "b. $OP4"
         echo "u. $OP6"
+        echo "r. $OP7"
         echo "s. $OP5"
         echo "q. $OP0"
         echo ""
@@ -85,6 +87,25 @@ function op_undo_last_commit () {
     git reset --soft HEAD~1
     echo
     echo "Undone."
+}
+
+function op_review_pull_request () {
+    echo 
+    echo "$BOLD$OP7$NORMAL"
+    read -p "Enter source branch: " SB
+    read -p "Enter target branch: " TB
+    echo 
+    echo "Pulling source branch..."
+    git checkout $SB 
+    git pull origin $SB 
+    echo 
+    echo "Pulling target branch..."
+    git checkout $TB
+    git pull origin $TB 
+    git merge --no-ff --no-commit $SB
+    echo 
+    echo "${BOLD}Ready for review$NORMAL"
+    echo "The changes are ready for review. Unstage them if you need to make a change."
 }
 
 function op_settings () {
@@ -152,6 +173,7 @@ do
         o)  op_pull_origin ;; 
         b)  op_create_branch ;; 
         u)  op_undo_last_commit ;; 
+        r)  op_review_pull_request ;; 
         s)  op_settings ;;
     esac 
 
