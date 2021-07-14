@@ -19,9 +19,12 @@ c. Copy branch name
 p. Push to origin
 o. Pull from origin
 b. Create a new branch
+u. Undo last commit
+r. Review Pull Request
 s. Git Settings
     1. Set my name and email
     2. Disallow file mod (permissions) tracking
     3. Remember my Git credentials
+q. Quit
 ```
  
