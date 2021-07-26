@@ -93,13 +93,14 @@ function op_undo_last_commit () {
 function op_review_pull_request () {
     echo 
     echo "$BOLD$OP7$NORMAL"
+    read -p "Enter pull request number: " PRN
     read -p "Enter source branch: " SB
     read -p "Enter target branch: " TB
-    RB="review/$TS---$SB---$TB"
+    RB="$TS-PR${PRN}-$SB-INTO-$TB"
     echo 
     echo "${BOLD}Pulling source branch...$NORMAL"
     git checkout $SB 
-    git pull origin $SB 
+    git pull origin $SB
     echo 
     echo "${BOLD}Pulling target branch...$NORMAL"
     git checkout $TB
@@ -109,7 +110,7 @@ function op_review_pull_request () {
     git branch $RB
     git checkout $RB
     git merge --no-ff --no-commit $SB
-    echo 
+    echo
     echo "${BOLD}Ready for review$NORMAL"
     echo "Source Branch: $SB"
     echo "Target Branch: $TB"
