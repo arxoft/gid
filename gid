@@ -99,11 +99,11 @@ function op_review_pull_request () {
     RB="$TS-PR${PRN}-$SB-INTO-$TB"
     echo 
     echo "${BOLD}Pulling source branch...$NORMAL"
-    git checkout $SB 
+    git fetch && git checkout $SB 
     git pull origin $SB
     echo 
     echo "${BOLD}Pulling target branch...$NORMAL"
-    git checkout $TB
+    git fetch && git checkout $TB
     git pull origin $TB
     echo 
     echo "${BOLD}Preparing source-target review branch...$NORMAL"
