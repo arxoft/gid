@@ -14,6 +14,7 @@ function display_menu () {
     OP4="Create a new branch"
     OP6="Undo last commit"
     OP7="Review Pull Request"
+    OP8="One line git log"
     OP5="Git Settings"
     OP5_1="Set my name and email"
     OP5_2="Disallow file mod (permissions) tracking"
@@ -34,6 +35,7 @@ function display_menu () {
         echo "b. $OP4"
         echo "u. $OP6"
         echo "r. $OP7"
+        echo "l. $OP8"
         echo "s. $OP5"
         echo "q. $OP0"
         echo ""
@@ -139,8 +141,8 @@ function op_settings () {
 
     1)   echo ". $OP5_1" 
             sleep 1
-            echo "OK. The current value for name: ${bold}`git config user.name`${NORMAL}"
-            echo "Current email is: ${bold}`git config user.email`${NORMAL}"
+            echo "OK. The current value for name: ${BOLD}`git config user.name`${NORMAL}"
+            echo "Current email is: ${BOLD}`git config user.email`${NORMAL}"
             echo 
             read -p "Enter new name: " N
             read -p "Enter new email: " E
@@ -152,16 +154,22 @@ function op_settings () {
             ;;
     2)   echo ". $OP5_2" 
             git config core.fileMode false
-            echo "${bold}Done. File permission changes won't be tracked any more.${NORMAL}"
+            echo "${BOLD}Done. File permission changes won't be tracked any more.${NORMAL}"
             slee 2
             ;;
     3)   echo ". $OP5_3" 
             git config credential.helper store
-            echo "${bold}Done. Git won't bother you with username and password except one last time.${NORMAL}"
+            echo "${BOLD}Done. Git won't bother you with username and password except one last time.${NORMAL}"
             sleep 2
             ;;
         
     esac 
+}
+
+function op_one_line_git_log () { 
+    echo 
+    echo "${BOLD}One line Git Log: ${NORMAL}"
+    git log --pretty=format:'%Cred%h%Creset %s'
 }
 
 while :
@@ -190,6 +198,7 @@ do
         u)  op_undo_last_commit ;; 
         r)  op_review_pull_request ;; 
         s)  op_settings ;;
+        l)  op_one_line_git_log ;; 
     esac 
 
     sleep 1
