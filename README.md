@@ -1,6 +1,6 @@
 # Git District
 
-Addicted to Git CLI? I save efforts by utilizing these quick operations.
+Addicted to Git CLI? I save calories by utilizing these quick operations.
 
 **Installation**
 
